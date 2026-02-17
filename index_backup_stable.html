@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#030303">
     <title>BEZLAD - Video Editor</title>
     <meta name="description" content="Portfolio of BEZLAD - Video Editor and Content Creator">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,6 +56,10 @@
                 background-attachment: scroll;
                 cursor: auto;
             }
+        }
+
+        html {
+            background-color: var(--bg-color);
         }
 
         /* Main Glass Container */
@@ -395,7 +400,7 @@
         /* Long Form Grid */
         .longform-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
 
@@ -417,7 +422,7 @@
         .footer-cta::before {
             content: '';
             position: absolute;
-            top: 40%;
+            top: 50%;
             left: 50%;
             width: 100%;
             height: 100%;
@@ -549,7 +554,7 @@
             }
 
             .main-wrapper {
-                padding: 20px;
+                padding: 15px;
                 border: none;
                 background: transparent;
             }
@@ -579,15 +584,30 @@
 
             .grid-container {
                 padding: 15px;
+                border-radius: 16px;
             }
 
             .shorts-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .longform-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
 
             @media (max-width: 480px) {
                 .shorts-grid {
                     grid-template-columns: 1fr;
+                }
+
+                .profile-name {
+                    font-size: 1.8rem;
+                }
+
+                body {
+                    padding: 20px 10px;
                 }
             }
         }
@@ -658,12 +678,15 @@
         /* Intro Animation */
         #intro-overlay {
             position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
             height: 100dvh;
             background-color: #030303;
-            z-index: 99999;
+            z-index: 999999;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -955,19 +978,19 @@
                 <div class="video-card aspect-9-16">
                     <iframe src="https://www.youtube.com/embed/yDRYaYm2Sfs" title="Shorts 1" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
                 </div>
                 <!-- Short 2 -->
                 <div class="video-card aspect-9-16">
                     <iframe src="https://www.youtube.com/embed/jbN9qf3XtUY" title="Shorts 2" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
                 </div>
                 <!-- Short 3 -->
                 <div class="video-card aspect-9-16">
                     <iframe src="https://www.youtube.com/embed/jbN9qf3XtUY" title="Shorts 3" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
                 </div>
             </div>
         </div>
@@ -981,13 +1004,13 @@
             <div class="longform-grid">
                 <!-- Video 1 -->
                 <div class="video-card aspect-16-9">
-                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_LONG_1" title="Video 1"
-                        allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_LONG_1" title="Video 1" allowfullscreen
+                        loading="lazy"></iframe>
                 </div>
                 <!-- Video 2 -->
                 <div class="video-card aspect-16-9">
-                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_LONG_2" title="Video 2"
-                        allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID_LONG_2" title="Video 2" allowfullscreen
+                        loading="lazy"></iframe>
                 </div>
             </div>
         </div>
@@ -1057,7 +1080,7 @@
             </div>
 
             <div class="footer-bottom">
-                <a href="mailto:bezlad.cg@gmail.com" class="email-link">bezlad.cg@gmail.com</a>
+                <a href="#" class="email-link" id="p-e">Loading email...</a>
                 <p>All rights reserved, ©2026</p>
             </div>
         </footer>
@@ -1155,6 +1178,20 @@
                     }
                 });
             });
+
+            // Email Protection
+            const eParts = ['bezlad.cg', 'gmail.com'];
+            const eEl = document.getElementById('p-e');
+            if (eEl) {
+                eEl.textContent = `${eParts[0]}@${eParts[1]}`;
+                eEl.href = `mailto:${eParts[0]}@${eParts[1]}`;
+                eEl.addEventListener('mouseenter', () => {
+                    eEl.style.color = 'var(--accent-color)';
+                });
+                eEl.addEventListener('mouseleave', () => {
+                    eEl.style.color = 'var(--text-secondary)';
+                });
+            }
         });
 
         // Language Dictionary
@@ -1246,6 +1283,7 @@
 
         let scrollAnimationId = null;
         let lastExpectedScroll = 0;
+        let isProgrammaticScrolling = false;
 
         function smoothScrollTo(targetPosition, duration) {
             if (scrollAnimationId) cancelAnimationFrame(scrollAnimationId);
@@ -1254,10 +1292,14 @@
             const distance = targetPosition - startPosition;
             let startTime = null;
             lastExpectedScroll = startPosition;
+            isProgrammaticScrolling = true;
 
             function animation(currentTime) {
-                // If user scrolled manually (actual scroll differs from expected by > 1.5px)
-                if (Math.abs(window.scrollY - lastExpectedScroll) > 1.5) {
+                if (!isProgrammaticScrolling) return;
+
+                // Detect manual scroll interruption (threshold 2px for mobile jitter)
+                if (Math.abs(window.scrollY - lastExpectedScroll) > 2) {
+                    isProgrammaticScrolling = false;
                     scrollAnimationId = null;
                     return;
                 }
@@ -1267,12 +1309,13 @@
                 const run = easeOutQuart(timeElapsed, startPosition, distance, duration);
 
                 window.scrollTo(0, run);
-                lastExpectedScroll = window.scrollY; // Real-world sync
+                lastExpectedScroll = window.scrollY;
 
                 if (timeElapsed < duration) {
                     scrollAnimationId = requestAnimationFrame(animation);
                 } else {
                     scrollAnimationId = null;
+                    isProgrammaticScrolling = false;
                 }
             }
 
@@ -1284,8 +1327,8 @@
             scrollAnimationId = requestAnimationFrame(animation);
         }
 
-        // Interruption logic: stop programmatic scroll if user interacts
         const stopProgrammaticScroll = () => {
+            isProgrammaticScrolling = false;
             if (scrollAnimationId) {
                 cancelAnimationFrame(scrollAnimationId);
                 scrollAnimationId = null;
@@ -1293,7 +1336,6 @@
         };
 
         window.addEventListener('wheel', stopProgrammaticScroll, { passive: true });
-        window.addEventListener('touchstart', stopProgrammaticScroll, { passive: true });
         window.addEventListener('mousedown', stopProgrammaticScroll);
         window.addEventListener('keydown', (e) => {
             const keys = ['ArrowUp', 'ArrowDown', 'Space', 'PageUp', 'PageDown', 'Home', 'End'];
