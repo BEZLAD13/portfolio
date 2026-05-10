@@ -864,6 +864,42 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover {
+            background: rgba(229, 80, 0, 0.2);
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(229, 80, 0, 0.3);
+            color: var(--accent-color);
+        }
     </style>
 </head>
 
@@ -1344,25 +1380,6 @@
                 cta_title: "КРУТИЙ МАТЕРІАЛ ПОТРЕБУЄ КРУТОГО МОНТАЖУ.",
                 cta_subtitle: "Відзняв, але не знаєш як зібрати докупи? Я знаю - пиши в Телеграм.",
                 cta_btn: "НАПИСАТИ"
-            },
-            ru: {
-                role: "2D & 3D Моушн-дизайнер · Видеомонтажер · AI Контент-мейкер",
-                bio: "Моушн-дизайнер и видеомонтажер с 3+ годами опыта в 2D и 3D анимации, визуальных эффектах и AI-продакшене.<br>Работаю в Adobe Premiere Pro, After Effects и DaVinci Resolve.<br>Сочетаю классический моушн-дизайн с современными AI-инструментами, чтобы создавать визуалы, которые не просто хорошо выглядят - они рассказывают истории.<br>К каждому проекту подхожу с вниманием к деталям и глубоким пониманием целей клиента. Веду полный цикл производства - от концепции до финального результата.",
-                showreel_label: "Шоурил",
-                shorts_label: "9x16",
-                longform_label: "16x9",
-                contact_label: "Контакты",
-                nav_portfolio: "Портфолио",
-                nav_tutorials: "Туториалы",
-                nav_projects: "Проекты",
-                nav_showreel: "Шоурил",
-                nav_9x16: "9x16",
-                nav_16x9: "16x9",
-                nav_back: "Назад",
-                nav_contact_btn: "Связаться",
-                cta_title: "КРУТОЙ МАТЕРИАЛ ТРЕБУЕТ КРУТОГО МОНТАЖА.",
-                cta_subtitle: "Отснял, но не знаешь как собрать воедино? Я знаю - пиши в Телеграм.",
-                cta_btn: "НАПИСАТЬ"
             }
         };
 
@@ -1372,7 +1389,6 @@
 
         langToggle.addEventListener('click', () => {
             if (currentLang === 'en') currentLang = 'ua';
-            else if (currentLang === 'ua') currentLang = 'ru';
             else currentLang = 'en';
             langLabel.textContent = currentLang.toUpperCase();
             updateText();
@@ -1514,7 +1530,43 @@
                 if (t[key]) el.innerHTML = t[key];
             });
         }
+
+        // Scroll to top button logic
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        if (scrollToTopBtn) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            }, { passive: true });
+
+            scrollToTopBtn.addEventListener('click', () => {
+                smoothScrollTo(0, 1000);
+            });
+            
+            scrollToTopBtn.addEventListener('mouseenter', () => {
+                if (cursorOutline && cursorDot) {
+                    cursorOutline.classList.add('hovered');
+                    cursorDot.classList.add('hovered');
+                }
+            });
+            scrollToTopBtn.addEventListener('mouseleave', () => {
+                if (cursorOutline && cursorDot) {
+                    cursorOutline.classList.remove('hovered');
+                    cursorDot.classList.remove('hovered');
+                }
+            });
+        }
     </script>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTopBtn" aria-label="Scroll to top">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
 </body>
 
 </html>
