@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEZLAD - Панель управління (CMS)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent-color: #E55000;
+            --accent-hover: #ff6a1a;
+            --bg-color: #080808;
+            --panel-bg: rgba(255, 255, 255, 0.03);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --text-main: #F3F3F3;
+            --text-muted: #8E8E93;
+            --glass-blur: blur(16px);
+            --error-color: #ff453a;
+            --success-color: #30d158;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* Login Layout */
+        #login-section {
+            width: 100%;
+            max-width: 400px;
+            margin: 10vh auto;
+            padding: 40px;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 24px;
+            backdrop-filter: var(--glass-blur);
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        #login-section h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Admin Main Layout */
+        #admin-section {
+            display: none;
+            width: 100%;
+            max-width: 1000px;
+            margin: 40px 20px;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 24px;
+            backdrop-filter: var(--glass-blur);
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+        }
+
+        .header-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--panel-border);
+            padding-bottom: 20px;
+        }
+
+        .logo-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-title span {
+            color: var(--accent-color);
+        }
+
+        /* Tabs Navigation */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.02);
+            padding: 6px;
+            border-radius: 14px;
+            border: 1px solid var(--panel-border);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            background: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(229, 80, 0, 0.3);
+        }
+
+        /* Forms */
+        .card-container {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--panel-border);
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        input, select, textarea {
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--panel-border);
+            color: var(--text-main);
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent-color);
+            background: rgba(229, 80, 0, 0.03);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            background: var(--accent-color);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--panel-border);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--text-muted);
+        }
+
+        .btn-delete {
+            background: rgba(255, 69, 58, 0.1);
+            color: var(--error-color);
+            border: 1px solid rgba(255, 69, 58, 0.2);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .btn-delete:hover {
+            background: var(--error-color);
+            color: #fff;
+        }
+
+        /* Data Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            padding: 12px 16px;
+            border-bottom: 2px solid var(--panel-border);
+            text-align: left;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--panel-border);
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        /* Drag & Drop Visuals */
+        tr[draggable="true"] {
+            cursor: grab;
+        }
+
+        tr.dragging {
+            opacity: 0.4;
+            background: rgba(229, 80, 0, 0.15) !important;
+            border: 1px dashed var(--accent-color);
+        }
+
+        .drag-handle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            width: 30px;
+            user-select: none;
+            text-align: center;
+        }
+
+        tr {
+            transition: border-top 0.15s ease, border-bottom 0.15s ease, background 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        /* Feedback messages */
+        .feedback {
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: none;
+        }
+        .feedback.error { color: var(--error-color); display: block; }
+        .feedback.success { color: var(--success-color); display: block; }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            .header-area { flex-direction: column; gap: 16px; align-items: flex-start; }
+            #admin-section { padding: 20px; margin: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ВХІД В АДМІНКУ -->
+    <div id="login-section">
+        <h2>BEZLAD <span>CMS</span></h2>
+        <div class="form-group" style="text-align: left; margin-bottom: 20px;">
+            <label>Пароль доступу</label>
+            <input type="password" id="password" placeholder="Введіть ваш пароль" onkeydown="if(event.key === 'Enter') login()">
+        </div>
+        <button class="btn" style="width: 100%;" onclick="login()">Увійти</button>
+        <div id="login-error" class="feedback error"></div>
+    </div>
+
+    <!-- ГОЛОВНИЙ ЕКРАН CMS -->
+    <div id="admin-section">
+        <div class="header-area">
+            <div class="logo-title">BEZLAD <span>CMS</span></div>
+            <div class="tabs">
+                <button class="tab-btn active" id="btn-videos" onclick="switchTab('videos')">
+                    <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                    Відео
+                </button>
+                <button class="tab-btn" id="btn-texts" onclick="switchTab('texts')">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    Тексти сайту
+                </button>
+                <button class="tab-btn" id="btn-analytics" onclick="switchTab('analytics')">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    Аналітика
+                </button>
+                <button class="tab-btn" id="btn-socials" onclick="switchTab('socials')">
+                    <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                    Соцмережі
+                </button>
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА: ВІДЕО -->
+        <div id="tab-videos" class="tab-content active">
+            <div class="card-container">
+                <h3 class="card-title">Додати нове відео</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>YouTube ID відео</label>
+                        <input type="text" id="youtube_id" placeholder="Наприклад: W3uKTGUFn_E (тільки ID, не посилання)">
+                    </div>
+                    <div class="form-group">
+                        <label>Категорія (Формат)</label>
+                        <select id="category">
+                            <option value="9x16">9x16 (Shorts / Reels)</option>
+                            <option value="16x9">16x9 (Longform / Горизонтальні)</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn" onclick="addVideo()">Додати у портфоліо</button>
+                <div id="add-video-error" class="feedback error"></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="margin: 0; font-size: 1.2rem;">Поточні відео (перетягніть для сортування)</h3>
+                <button class="btn" style="background: #30d158;" onclick="saveVideoOrder()">Зберегти порядок</button>
+            </div>
+            
+            <table style="background: rgba(0,0,0,0.1); border-radius: 12px; overflow: hidden;">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;"></th>
+                        <th style="width: 60px;">ID</th>
+                        <th>YouTube ID</th>
+                        <th>Категорія</th>
+                        <th style="width: 100px; text-align: right;">Дія</th>
+                    </tr>
+                </thead>
+                <tbody id="video-list">
+                    <!-- Завантажиться динамічно -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ВКЛАДКА: ТЕКСТИ -->
+        <div id="tab-texts" class="tab-content">
+            <div class="card-container">
+                <h3 class="card-title">Редагувати тексти сайту</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Мова</label>
+                        <select id="text_lang">
+                            <option value="ua">Українська (ua)</option>
+                            <option value="en">English (en)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ключ тексту (оберіть із таблиці нижче)</label>
+                        <input type="text" id="text_key" placeholder="Наприклад: bio">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>Текст (дозволено HTML теги, наприклад &lt;br&gt;)</label>
+                    <textarea id="text_content" rows="6" placeholder="Введіть текст..."></textarea>
+                </div>
+                <button class="btn" onclick="saveText()">Зберегти зміни</button>
+                <div id="text-feedback" class="feedback"></div>
+            </div>
+
+            <h3 style="font-size: 1.2rem; margin-bottom: 16px;">Список доступних ключів</h3>
+            <table style="background: rgba(0,0,0,0.1); border-radius: 12px; overflow: hidden;">
+                <thead>
+                    <tr>
+                        <th style="width: 150px;">Ключ</th>
+                        <th>Український вміст</th>
+                        <th>Англійський вміст</th>
+                    </tr>
+                </thead>
+                <tbody id="texts-list">
+                    <!-- Завантажиться динамічно -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ВКЛАДКА: АНАЛІТИКА -->
+        <div id="tab-analytics" class="tab-content">
+            <h3 style="font-size: 1.2rem; margin-bottom: 16px;">Перегляди сайту за останні 30 днів</h3>
+            <table style="background: rgba(0,0,0,0.1); border-radius: 12px; overflow: hidden;">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Кількість унікальних візитів</th>
+                    </tr>
+                </thead>
+                <tbody id="analytics-list">
+                    <!-- Завантажиться динамічно -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ВКЛАДКА: СОЦМЕРЕЖІ -->
+        <div id="tab-socials" class="tab-content">
+            <div class="card-container">
+                <h3 class="card-title">Редагувати посилання на соцмережі</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: -10px; margin-bottom: 20px;">Змініть URL для будь-якої соціальної мережі і натисніть «Зберегти».</p>
+                <div id="socials-form-list">
+                    <!-- Завантажиться динамічно -->
+                </div>
+                <div id="socials-feedback" class="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let adminPassword = '';
+        let currentVideos = [];
+        let draggedRow = null;
+
+        function login() {
+            const passInput = document.getElementById('password');
+            adminPassword = passInput.value;
+            if (adminPassword) {
+                // Перевіримо авторизацію спробою отримати аналітику
+                fetch('/api/analytics', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: adminPassword })
+                })
+                .then(res => {
+                    if (res.ok) {
+                        document.getElementById('login-section').style.display = 'none';
+                        document.getElementById('admin-section').style.display = 'block';
+                        loadAll();
+                    } else {
+                        document.getElementById('login-error').innerText = 'Неправильний пароль access denied.';
+                        document.getElementById('login-error').style.display = 'block';
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('login-error').innerText = 'Помилка з\'єднання з сервером.';
+                    document.getElementById('login-error').style.display = 'block';
+                });
+            }
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            document.getElementById('btn-' + tabId).classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
+
+        function loadAll() {
+            loadVideos();
+            loadTexts();
+            loadAnalytics();
+            loadSocials();
+        }
+
+        // --- ВІДЕО ---
+        function loadVideos() {
+            fetch('/api/videos')
+                .then(res => res.json())
+                .then(videos => {
+                    currentVideos = videos;
+                    renderVideos();
+                });
+        }
+
+        function renderVideos() {
+            const tbody = document.getElementById('video-list');
+            tbody.innerHTML = '';
+            currentVideos.forEach((v, index) => {
+                const tr = document.createElement('tr');
+                tr.draggable = true;
+                tr.dataset.id = v.id;
+                tr.dataset.index = index;
+                tr.innerHTML = `
+                    <td class="drag-handle">☰</td>
+                    <td><span style="opacity: 0.5;">#</span>${v.id}</td>
+                    <td><a href="https://youtube.com/watch?v=${v.youtube_id}" target="_blank" style="color:var(--accent-color); font-weight: 600; text-decoration: none;">${v.youtube_id}</a></td>
+                    <td><span style="background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem;">${v.category}</span></td>
+                    <td style="text-align: right;"><button class="btn-delete" onclick="deleteVideo(${v.id})">Видалити</button></td>
+                `;
+                
+                // --- НАЛАШТУВАННЯ DRAG & DROP UX ---
+                tr.addEventListener('dragstart', (e) => {
+                    draggedRow = index;
+                    tr.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                });
+                
+                tr.addEventListener('dragend', () => {
+                    tr.classList.remove('dragging');
+                    // Очистимо всі бордери
+                    document.querySelectorAll('#video-list tr').forEach(row => {
+                        row.style.borderTop = '';
+                        row.style.borderBottom = '';
+                    });
+                });
+                
+                tr.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    if (draggedRow === index) return;
+                    
+                    const rect = tr.getBoundingClientRect();
+                    const relativeY = e.clientY - rect.top;
+                    
+                    // Очистимо інші рядки спочатку
+                    document.querySelectorAll('#video-list tr').forEach(row => {
+                        if (row !== tr) {
+                            row.style.borderTop = '';
+                            row.style.borderBottom = '';
+                        }
+                    });
+
+                    // Малюємо помаранчеву лінію вставки над або під елементом
+                    if (relativeY < rect.height / 2) {
+                        tr.style.borderTop = '2px solid var(--accent-color)';
+                        tr.style.borderBottom = '';
+                    } else {
+                        tr.style.borderBottom = '2px solid var(--accent-color)';
+                        tr.style.borderTop = '';
+                    }
+                });
+                
+                tr.addEventListener('dragleave', () => {
+                    tr.style.borderTop = '';
+                    tr.style.borderBottom = '';
+                });
+                
+                tr.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    tr.style.borderTop = '';
+                    tr.style.borderBottom = '';
+                    
+                    const fromIndex = draggedRow;
+                    const toIndex = index;
+                    
+                    if (fromIndex !== null && fromIndex !== toIndex) {
+                        // Переміщення в нашому масиві
+                        const movedItem = currentVideos.splice(fromIndex, 1)[0];
+                        currentVideos.splice(toIndex, 0, movedItem);
+                        renderVideos();
+                    }
+                });
+                
+                tbody.appendChild(tr);
+            });
+        }
+
+        function saveVideoOrder() {
+            const order = currentVideos.map((v, i) => ({ id: v.id, order_index: i }));
+            fetch('/api/videos/reorder', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: adminPassword, order })
+            })
+            .then(res => {
+                if (res.ok) {
+                    alert('Порядок відео успішно збережено!');
+                } else {
+                    alert('Помилка збереження порядку.');
+                }
+            });
+        }
+
+        function addVideo() {
+            const youtube_id = document.getElementById('youtube_id').value.trim();
+            const category = document.getElementById('category').value;
+            const errDiv = document.getElementById('add-video-error');
+            
+            if (!youtube_id) {
+                errDiv.innerText = 'Введіть YouTube ID!';
+                errDiv.className = 'feedback error';
+                return;
+            }
+
+            fetch('/api/videos', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ youtube_id, category, password: adminPassword })
+            })
+            .then(res => {
+                if (res.ok) {
+                    document.getElementById('youtube_id').value = '';
+                    errDiv.style.display = 'none';
+                    loadVideos();
+                } else {
+                    errDiv.innerText = 'Не вдалося додати відео.';
+                    errDiv.className = 'feedback error';
+                }
+            });
+        }
+
+        function deleteVideo(id) {
+            if (!confirm('Ви дійсно хочете видалити це відео з портфоліо?')) return;
+            fetch(`/api/videos/${id}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: adminPassword })
+            }).then(() => loadVideos());
+        }
+
+        // --- ТЕКСТИ ---
+        function loadTexts() {
+            fetch('/api/texts')
+                .then(res => res.json())
+                .then(texts => {
+                    const tbody = document.getElementById('texts-list');
+                    tbody.innerHTML = '';
+                    const keys = new Set([...Object.keys(texts.en || {}), ...Object.keys(texts.ua || {})]);
+                    keys.forEach(k => {
+                        const tr = document.createElement('tr');
+                        const uaText = (texts.ua && texts.ua[k]) || '';
+                        const enText = (texts.en && texts.en[k]) || '';
+                        tr.innerHTML = `
+                            <td><strong style="color:#fff;">${k}</strong></td>
+                            <td><div style="max-height:80px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width: 350px;">${uaText}</div></td>
+                            <td><div style="max-height:80px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width: 350px;">${enText}</div></td>
+                        `;
+                        tr.style.cursor = 'pointer';
+                        tr.onclick = () => {
+                            document.getElementById('text_key').value = k;
+                            document.getElementById('text_content').value = document.getElementById('text_lang').value === 'ua' ? uaText : enText;
+                        };
+                        tbody.appendChild(tr);
+                    });
+                });
+        }
+
+        // Автозаміна контенту в полі при зміні мови під час редагування
+        document.getElementById('text_lang').addEventListener('change', () => {
+            const key = document.getElementById('text_key').value;
+            if (key) {
+                fetch('/api/texts')
+                    .then(res => res.json())
+                    .then(texts => {
+                        const lang = document.getElementById('text_lang').value;
+                        document.getElementById('text_content').value = (texts[lang] && texts[lang][key]) || '';
+                    });
+            }
+        });
+
+        function saveText() {
+            const lang = document.getElementById('text_lang').value;
+            const key_name = document.getElementById('text_key').value.trim();
+            const content = document.getElementById('text_content').value;
+            const feedback = document.getElementById('text-feedback');
+            
+            if (!key_name || !content) {
+                feedback.innerText = 'Заповніть всі поля!';
+                feedback.className = 'feedback error';
+                return;
+            }
+
+            fetch('/api/texts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: adminPassword, lang, key_name, content })
+            })
+            .then(res => {
+                if (res.ok) {
+                    feedback.innerText = 'Текст успішно збережено!';
+                    feedback.className = 'feedback success';
+                    setTimeout(() => feedback.style.display = 'none', 3000);
+                    loadTexts();
+                } else {
+                    feedback.innerText = 'Помилка при збереженні.';
+                    feedback.className = 'feedback error';
+                }
+            });
+        }
+
+        // --- АНАЛІТИКА ---
+        function loadAnalytics() {
+            fetch('/api/analytics', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: adminPassword })
+            })
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('analytics-list');
+                tbody.innerHTML = '';
+                if (data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="2" style="text-align:center; opacity:0.5;">Дані аналітики поки відсутні</td></tr>`;
+                    return;
+                }
+                data.forEach(d => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${d.date}</td><td style="font-weight:700; color:var(--accent-color);">${d.views}</td>`;
+                    tbody.appendChild(tr);
+                });
+            });
+        }
+        // --- СОЦМЕРЕЖІ ---
+        function loadSocials() {
+            fetch('/api/socials')
+                .then(res => res.json())
+                .then(socials => {
+                    const container = document.getElementById('socials-form-list');
+                    container.innerHTML = '';
+                    socials.forEach(s => {
+                        const div = document.createElement('div');
+                        div.className = 'form-group';
+                        div.style.marginBottom = '16px';
+                        div.innerHTML = `
+                            <label>${s.name}</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="url" id="social-url-${s.id}" value="${s.url}" placeholder="https://..." style="flex: 1;">
+                                <button class="btn" style="white-space: nowrap;" onclick="saveSocial(${s.id})">Зберегти</button>
+                            </div>
+                        `;
+                        container.appendChild(div);
+                    });
+                });
+        }
+
+        function saveSocial(id) {
+            const url = document.getElementById(`social-url-${id}`).value.trim();
+            const feedback = document.getElementById('socials-feedback');
+            if (!url) { feedback.innerText = 'URL не може бути порожнім!'; feedback.className = 'feedback error'; return; }
+            fetch('/api/socials', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: adminPassword, id, url })
+            }).then(res => {
+                if (res.ok) {
+                    feedback.innerText = 'Посилання збережено!';
+                    feedback.className = 'feedback success';
+                    setTimeout(() => feedback.style.display = 'none', 3000);
+                } else {
+                    res.json().then(d => { feedback.innerText = d.error || 'Помилка.'; feedback.className = 'feedback error'; });
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>

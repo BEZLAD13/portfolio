@@ -1,0 +1,283 @@
+{
+    "videos": [
+        {
+            "id": 1,
+            "youtube_id": "W3uKTGUFn_E",
+            "category": "9x16",
+            "order_index": 0
+        },
+        {
+            "id": 2,
+            "youtube_id": "8N2MNjHSI5o",
+            "category": "9x16",
+            "order_index": 1
+        },
+        {
+            "id": 3,
+            "youtube_id": "N9nt0eF1980",
+            "category": "9x16",
+            "order_index": 2
+        },
+        {
+            "id": 4,
+            "youtube_id": "ROxO4EkXnsY",
+            "category": "9x16",
+            "order_index": 3
+        },
+        {
+            "id": 5,
+            "youtube_id": "q2fJNLUzT80",
+            "category": "9x16",
+            "order_index": 4
+        },
+        {
+            "id": 6,
+            "youtube_id": "IFETNgQ-lH4",
+            "category": "9x16",
+            "order_index": 5
+        },
+        {
+            "id": 7,
+            "youtube_id": "s96PKfsESsM",
+            "category": "9x16",
+            "order_index": 6
+        },
+        {
+            "id": 8,
+            "youtube_id": "oE4w-ftwdKk",
+            "category": "9x16",
+            "order_index": 7
+        },
+        {
+            "id": 9,
+            "youtube_id": "jUfMBDo65jI",
+            "category": "9x16",
+            "order_index": 8
+        },
+        {
+            "id": 10,
+            "youtube_id": "lzQp7hNEem4",
+            "category": "9x16",
+            "order_index": 9
+        },
+        {
+            "id": 11,
+            "youtube_id": "1gKldQ13Cw8",
+            "category": "16x9",
+            "order_index": 10
+        },
+        {
+            "id": 12,
+            "youtube_id": "RX_zFTfgTFQ",
+            "category": "16x9",
+            "order_index": 11
+        },
+        {
+            "id": 13,
+            "youtube_id": "mx5utJA77Ok",
+            "category": "16x9",
+            "order_index": 12
+        },
+        {
+            "id": 14,
+            "youtube_id": "81pB01k9y_g",
+            "category": "16x9",
+            "order_index": 13
+        },
+        {
+            "id": 15,
+            "youtube_id": "5SG-inQw4fY",
+            "category": "16x9",
+            "order_index": 14
+        }
+    ],
+    "texts": [
+        {
+            "lang": "en",
+            "key_name": "role",
+            "content": "2D & 3D Motion Designer · Video Editor · AI Content Creator"
+        },
+        {
+            "lang": "ua",
+            "key_name": "role",
+            "content": "2D & 3D Моушн-дизайнер · Відеомонтажер · AI Контент-мейкер"
+        },
+        {
+            "lang": "en",
+            "key_name": "bio",
+            "content": "Motion designer and video editor with 3+ years of experience in 2D and 3D animation, visual effects, and AI production.<br>I work in Adobe Premiere Pro, After Effects, and DaVinci Resolve.<br>I combine classic motion design with modern AI tools to create visuals that don't just look good - they tell stories.<br>I approach every project with attention to detail and a deep understanding of the client's goals. I handle the full production cycle - from concept to final result."
+        },
+        {
+            "lang": "ua",
+            "key_name": "bio",
+            "content": "Моушн-дизайнер та відеомонтажер з 3+ роками досвіду у 2D та 3D анімації, візуальних ефектах та AI-продакшні.<br>Працюю в Adobe Premiere Pro, After Effects та DaVinci Resolve.<br>Поєдную класичний моушн-дизайн із сучасними AI-інструментами, щоб створювати візуали, які не просто виглядають добре - вони розповідають історії.<br>До кожного проєкту підходжу з увагою до деталей та глибоким розумінням цілей клієнта. Веду повний цикл виробництва - від концепції до фінального результату."
+        },
+        {
+            "lang": "en",
+            "key_name": "contact_form_title",
+            "content": "LET'S WORK TOGETHER"
+        },
+        {
+            "lang": "ua",
+            "key_name": "contact_form_title",
+            "content": "ДАВАЙТЕ ПРАЦЮВАТИ РАЗОМ"
+        },
+        {
+            "lang": "en",
+            "key_name": "contact_label",
+            "content": "Contact"
+        },
+        {
+            "lang": "ua",
+            "key_name": "contact_label",
+            "content": "Контакт"
+        },
+        {
+            "lang": "en",
+            "key_name": "cta_subtitle",
+            "content": "Shot it but don't know how to put it together? Leave a message."
+        },
+        {
+            "lang": "ua",
+            "key_name": "cta_subtitle",
+            "content": "Зняли, але не знаєте як зібрати? Залиште повідомлення."
+        },
+        {
+            "lang": "en",
+            "key_name": "contact_name_label",
+            "content": "Name"
+        },
+        {
+            "lang": "ua",
+            "key_name": "contact_name_label",
+            "content": "Ім'я"
+        },
+        {
+            "lang": "en",
+            "key_name": "contact_name_placeholder",
+            "content": "Your name"
+        },
+        {
+            "lang": "ua",
+            "key_name": "contact_name_placeholder",
+            "content": "Ваше ім'я"
+        },
+        {
+            "lang": "en",
+            "key_name": "contact_info_label",
+            "content": "Telegram / Email"
+        },
+        {
+            "lang": "ua",
+            "key_name": "contact_info_label",
+            "content": "Telegram / Email"
+        },
+        {
+            "lang": "en",
+            "key_name": "contact_msg_label",
+            "content": "About your project"
+        },
+        {
+            "lang": "ua",
+            "key_name": "contact_msg_label",
+            "content": "Про ваш проєкт"
+        },
+        {
+            "lang": "en",
+            "key_name": "contact_msg_placeholder",
+            "content": "Tell me about your project — what you shot, what you need, what's the deadline..."
+        },
+        {
+            "lang": "ua",
+            "key_name": "contact_msg_placeholder",
+            "content": "Розкажіть про проєкт — що знімали, що потрібно, який дедлайн..."
+        },
+        {
+            "lang": "en",
+            "key_name": "contact_btn",
+            "content": "SEND MESSAGE"
+        },
+        {
+            "lang": "ua",
+            "key_name": "contact_btn",
+            "content": "НАДІСЛАТИ"
+        },
+        {
+            "lang": "en",
+            "key_name": "intro_quote_1",
+            "content": "Every frame matters."
+        },
+        {
+            "lang": "ua",
+            "key_name": "intro_quote_1",
+            "content": "Кожен кадр має значення."
+        },
+        {
+            "lang": "en",
+            "key_name": "intro_quote_2",
+            "content": "Every movement has a purpose."
+        },
+        {
+            "lang": "ua",
+            "key_name": "intro_quote_2",
+            "content": "Кожен рух має мету."
+        },
+        {
+            "lang": "en",
+            "key_name": "intro_hint",
+            "content": "Turn on sound for a better experience"
+        },
+        {
+            "lang": "ua",
+            "key_name": "intro_hint",
+            "content": "Увімкніть звук для кращого досвіду"
+        },
+        {
+            "lang": "en",
+            "key_name": "start_btn",
+            "content": "START"
+        },
+        {
+            "lang": "ua",
+            "key_name": "start_btn",
+            "content": "ПОЧАТИ"
+        }
+    ],
+    "socials": [
+        {
+            "id": 1,
+            "name": "Instagram",
+            "url": "https://www.instagram.com/bezlad.cg"
+        },
+        {
+            "id": 2,
+            "name": "TikTok",
+            "url": "https://www.tiktok.com/@bezlad.cg"
+        },
+        {
+            "id": 3,
+            "name": "YouTube",
+            "url": "https://www.youtube.com/@bezlad13"
+        },
+        {
+            "id": 4,
+            "name": "Telegram",
+            "url": "https://t.me/bezlad13"
+        },
+        {
+            "id": 5,
+            "name": "LinkedIn",
+            "url": "https://www.linkedin.com/in/bezlad"
+        }
+    ],
+    "analytics": [
+        {
+            "date": "2026-07-12",
+            "views": 19
+        },
+        {
+            "date": "2026-07-13",
+            "views": 56
+        }
+    ]
+}
